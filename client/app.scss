@@ -18,7 +18,15 @@ body {
   height: 100%;
 }
 
+.page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+}
 .page-wrapper {
+  flex: 1;
   animation: .2s ease FADE_IN;
 }
 
@@ -32,4 +40,5 @@ body {
 /***** Component Style Imports *****/
 
 @import './navbar/navbar.scss';
-@import './calendars/calendars-page.scss';
+@import './calendars/calendars-page/calendars-page.scss';
+@import './calendars/calendar-builder-page/calendar-builder-page.scss';
