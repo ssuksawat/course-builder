@@ -1,5 +1,6 @@
 /***** Library & partials import *****/
 
+@import '../node_modules/bootstrap/scss/bootstrap-flex.scss';
 @import './style/variables.import.scss';
 @import './style/mixins.import.scss';
 
@@ -21,8 +22,6 @@ body {
   animation: .2s ease FADE_IN;
 }
 
-.text-danger { color: $color-red !important; }
-
 /***** Reusable Keyframes *****/
 
 @keyframes FADE_IN {
@@ -31,3 +30,6 @@ body {
 }
 
 /***** Component Style Imports *****/
+
+@import './navbar/navbar.scss';
+@import './calendars/calendars-page.scss';

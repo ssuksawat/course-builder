@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
+import './config/vendor';
 import routes from './config/routes';
 import reducer from './config/reducer';
 import middleware from './config/middleware';
