@@ -3,11 +3,12 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
+  debug: true,
   devtool: 'inline-source-map',
   context: path.join(__dirname, './client'),
   entry: [
-    'webpack-hot-middleware/client',
-    './index.js',
+    'webpack-hot-middleware/client?reload=true',
+    './index.jsx',
   ],
   output: {
     path: path.resolve(__dirname, './public/dist'),
@@ -20,19 +21,15 @@ module.exports = {
       'process.env.NODE_ENV': '"development"',
     }),
   ],
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'react-hot',
-      },
-      {
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015', 'react-hmre'],
-          plugins: ['add-module-exports'],
-        },
+        loaders: ['babel'],
       },
       {
         test: /\.css$/,
