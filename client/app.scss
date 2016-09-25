@@ -1,0 +1,33 @@
+/***** Library & partials import *****/
+
+@import './style/variables.import.scss';
+@import './style/mixins.import.scss';
+
+/***** App-wide styling *****/
+
+body {
+  font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', sans-serif;
+  color: #4A4A4A;
+  width: 100vw;
+  height: 100vh;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+.page-wrapper {
+  animation: .2s ease FADE_IN;
+}
+
+.text-danger { color: $color-red !important; }
+
+/***** Reusable Keyframes *****/
+
+@keyframes FADE_IN {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/***** Component Style Imports *****/

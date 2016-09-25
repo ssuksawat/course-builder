@@ -1,0 +1,15 @@
+@mixin overflow-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin unstyle-btn() {
+  &,
+  &:active,
+  &:hover,
+  &:focus {
+    background: none;
+    border: none;
+  }
+}
