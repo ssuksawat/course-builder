@@ -1,13 +1,15 @@
 import React from 'react';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, browserHistory, IndexRedirect } from 'react-router';
 
 import App from '../App';
 import Home from '../home/Home';
+import CalendarsPage from '../calendars/CalendarsPage';
 
 const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
+      <IndexRedirect to="/calendars" />
+      <Route path="calendars" component={CalendarsPage} />
     </Route>
   </Router>
 );
