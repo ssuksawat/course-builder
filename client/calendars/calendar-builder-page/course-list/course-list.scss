@@ -1,0 +1,37 @@
+.course-list {
+  padding: 14px 0;
+  overflow: auto;
+}
+
+.course-list__item {
+  padding: 12px;
+  display: flex;
+  flex-flow: column nowrap;
+  border-bottom: 1px solid $color-grey-lighter;
+}
+
+.course-list__item-title {
+  margin-bottom: 6px;
+  color: $color-grey-darkest;
+  font-size: 1.1rem;
+  @include overflow-ellipsis();
+}
+.course-list__item-info {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  color: $color-grey;
+  font-size: .75rem;
+  > li {
+    max-width: 33%;
+    @include overflow-ellipsis();
+  }
+  > li:nth-child(n+2):before {
+    content: "";
+    margin: 0 10px;
+    width: 1px;
+    height: 12px;
+    border-left: 1px solid $color-grey-lighter;
+  }
+}

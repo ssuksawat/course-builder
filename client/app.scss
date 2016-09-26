@@ -37,8 +37,7 @@ body {
   to   { opacity: 1; }
 }
 
-/***** Component Style Imports *****/
+/***** Component Styles Imports *****/
 
 @import './navbar/navbar.scss';
-@import './calendars/calendars-page/calendars-page.scss';
-@import './calendars/calendar-builder-page/calendar-builder-page.scss';
+@import './calendars/index.scss';

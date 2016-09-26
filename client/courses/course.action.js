@@ -18,3 +18,16 @@ export function removeCourse(id) {
     payload: id,
   };
 }
+
+export function setSelectedCourses(courses) {
+  return {
+    type: 'SET_SELECTED_COURSES',
+    payload: courses,
+  };
+}
+
+export function clearSelectedCourses() {
+  return {
+    type: 'CLEAR_SELECTED_COURSES',
+  };
+}

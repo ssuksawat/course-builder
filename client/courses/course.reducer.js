@@ -1,5 +1,5 @@
 const initialState = {
-  catalog: {},
+  catalog: { courses: [] },
   loading: false,
   selectedCourses: {},
 };
@@ -9,6 +9,7 @@ const GET_COURSES_SUCCESS = 'GET_COURSES_FULFILLED';
 const GET_COURSES_FAILED = 'GET_COURSES_REJECTED';
 const SELECT_COURSE = 'SELECT_COURSE';
 const REMOVE_COURSE = 'REMOVE_COURSE';
+const SET_SELECTED_COURSES = 'SET_SELECTED_COURSES';
 const CLEAR_SELECTED_COURSES = 'CLEAR_SELECTED_COURSES';
 
 export default (state = initialState, action) => {
@@ -36,6 +37,8 @@ export default (state = initialState, action) => {
       delete newSelected[action.payload];
       return Object.assign({}, state, { selectedCourses: newSelected });
     }
+    case SET_SELECTED_COURSES:
+      return Object.assign({}, state, { selectedCourses: action.payload });
     case CLEAR_SELECTED_COURSES:
       return Object.assign({}, state, { selectedCourses: {} });
 

@@ -69,3 +69,9 @@ export function deleteCalendar(id) {
     payload: Promise.resolve(true),
   };
 }
+
+export function initNewCalendar() {
+  return {
+    type: 'INIT_NEW_CALENDAR',
+  };
+}

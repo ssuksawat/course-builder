@@ -1,10 +1,11 @@
 const initialState = {
   calendars: [],
-  calendar: {},
+  calendar: { name: '', courses: [] },
   loading: false,
   error: undefined,
 };
 
+const INIT_NEW_CALENDAR = 'INIT_NEW_CALENDAR';
 const GET_ALL_CALENDARS_PENDING = 'GET_ALL_CALENDARS_PENDING';
 const GET_ALL_CALENDARS_SUCCESS = 'GET_ALL_CALENDARS_FULFILLED';
 const GET_ALL_CALENDARS_FAILED = 'GET_ALL_CALENDARS_REJECTED';
@@ -20,6 +21,9 @@ const DELETE_CALENDAR_FAILED = 'DELETE_CALENDAR_REJECTED';
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case INIT_NEW_CALENDAR:
+      return Object.assign({}, state);
+
     case GET_ALL_CALENDARS_PENDING:
     case GET_CALENDAR_PENDING:
     case SAVE_CALENDAR_PENDING:
