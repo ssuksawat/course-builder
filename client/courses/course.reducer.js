@@ -37,8 +37,13 @@ export default (state = initialState, action) => {
       delete newSelected[action.payload];
       return Object.assign({}, state, { selectedCourses: newSelected });
     }
-    case SET_SELECTED_COURSES:
-      return Object.assign({}, state, { selectedCourses: action.payload });
+    case SET_SELECTED_COURSES: {
+      const newSelected = {};
+      action.payload.forEach(course => {
+        newSelected[course.id] = course;
+      });
+      return Object.assign({}, state, { selectedCourses: newSelected });
+    }
     case CLEAR_SELECTED_COURSES:
       return Object.assign({}, state, { selectedCourses: {} });
 

@@ -1,3 +1,5 @@
+import { setSelectedCourses, clearSelectedCourses } from '../courses/course.action';
+
 export function getCalendars() {
   // Note: fake get calendars - use localStorage instead
   const promise = new Promise((resolve, reject) => {
@@ -23,21 +25,23 @@ export function getCalendars() {
 }
 
 export function getCalendarById(id) {
-  // Note: fake get calendar - use localStorage instead
-  const promise = new Promise((resolve, reject) => {
-    try {
-      const serialized = localStorage.getItem(`calendar:${id}`);
-      if (!serialized) { throw new Error(`Calendar with ID ${id} does not exist`); }
-      resolve(JSON.parse(serialized));
-    } catch (e) {
-      reject(e);
-    }
-  });
+  return (dispatch) => {
+    // Note: fake get calendar - use localStorage instead
+    const promise = new Promise((resolve, reject) => {
+      try {
+        const serialized = localStorage.getItem(`calendar:${id}`);
+        if (!serialized) { throw new Error(`Calendar with ID ${id} does not exist`); }
+        resolve(JSON.parse(serialized));
+      } catch (e) {
+        reject(e);
+      }
+    });
 
-  return {
-    type: 'GET_CALENDAR',
-    id,
-    payload: promise,
+    promise
+      .then(calendar => {
+        dispatch({ type: 'GET_CALENDAR', id, payload: promise });
+        dispatch(setSelectedCourses(calendar.courses));
+      });
   };
 }
 
@@ -71,7 +75,8 @@ export function deleteCalendar(id) {
 }
 
 export function initNewCalendar() {
-  return {
-    type: 'INIT_NEW_CALENDAR',
+  return (dispatch) => {
+    dispatch({ type: 'INIT_NEW_CALENDAR' });
+    dispatch(clearSelectedCourses());
   };
 }
