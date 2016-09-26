@@ -31,8 +31,14 @@
     display: flex;
     border-top: 1px solid $color-grey-lighter;
 
+    .name-input {
+      padding-right: 24px;
+      max-width: 500px;
+    }
     .save-btn {
       margin-left: auto;
+      min-width: 120px;
+      text-transform: uppercase;
     }
   }
 }

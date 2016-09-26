@@ -59,7 +59,7 @@ export class CalendarBuilder extends React.Component {
   }
 
   render() {
-    const { catalog, selectedCourses } = this.props;
+    const { catalog, selectedCourses, calendar } = this.props;
     const { currentTab } = this.state;
     const selected = Object.keys(selectedCourses).map(id => selectedCourses[id]);
     const courses = currentTab === 'ALL' ? catalog.courses : selected;
@@ -88,10 +88,14 @@ export class CalendarBuilder extends React.Component {
             />
           </section>
           <section className="calendar-section">
-            <Calendar courses={selected} />
+            <Calendar courses={selected} onItemClick={this.onItemClick} />
           </section>
         </div>
         <div className="page-footer">
+          <input
+            className="form-control name-input" placeholder="Calendar Name..." value={calendar.name}
+            ref={c => { this.nameInput = c; }}
+          />
           <button className="btn btn-primary save-btn">Save</button>
         </div>
       </div>
@@ -100,6 +104,7 @@ export class CalendarBuilder extends React.Component {
 }
 CalendarBuilder.propTypes = {
   params: React.PropTypes.object,
+  calendar: React.PropTypes.object,
   catalog: React.PropTypes.object,
   selectedCourses: React.PropTypes.object,
   loading: React.PropTypes.bool,
@@ -107,7 +112,8 @@ CalendarBuilder.propTypes = {
   courseActions: React.PropTypes.object,
 };
 
-const mapStateToProps = ({ courses }) => ({
+const mapStateToProps = ({ courses, calendars }) => ({
+  calendar: calendars.calendar,
   catalog: courses.catalog,
   loading: courses.loading,
   selectedCourses: courses.selectedCourses,

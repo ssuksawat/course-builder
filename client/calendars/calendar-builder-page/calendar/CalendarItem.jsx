@@ -8,7 +8,7 @@ const NUM_DAYS = 5;
 const TIMEBLOCK_HEIGHT = 100 / NUM_HOURS;
 const TIMEBLOCK_WIDTH = 100 / NUM_DAYS;
 
-const CalendarItem = ({ course, day }) => {
+const CalendarItem = ({ course, day, onItemClick }) => {
   const startTime = course.timeIndex[0];
   const endTime = course.timeIndex[1];
   const top = ((startTime - 7) * TIMEBLOCK_HEIGHT);
@@ -25,7 +25,7 @@ const CalendarItem = ({ course, day }) => {
   return (
     <div
       className={classnames('calendar__item', { 'has-conflict': course.hasConflict })}
-      style={style} title={course.name}
+      style={style} title={course.name} onClick={() => onItemClick(course)}
     >
       <div className="calendar__item-title">
         {course.name}
@@ -36,6 +36,7 @@ const CalendarItem = ({ course, day }) => {
 CalendarItem.propTypes = {
   course: React.PropTypes.object,
   day: React.PropTypes.number,
+  onItemClick: React.PropTypes.func,
 };
 
 export default CalendarItem;

@@ -7,11 +7,16 @@ const dayLabels = getDayLabels();
 
 export default class Calendar extends React.Component {
   render() {
-    const courses = this.props.courses;
+    const { courses, onItemClick } = this.props;
     const calendarItems = [];
     courses.forEach(course => {
       course.dayIndex.forEach(day => {
-        calendarItems.push(<CalendarItem key={`${course.id}:${day}`} course={course} day={day} />);
+        calendarItems.push(
+          <CalendarItem
+            key={`${course.id}:${day}`}
+            course={course} day={day} onItemClick={onItemClick}
+          />
+        );
       });
     });
 
@@ -36,6 +41,7 @@ export default class Calendar extends React.Component {
 }
 Calendar.propTypes = {
   courses: React.PropTypes.array,
+  onItemClick: React.PropTypes.func,
 };
 
 /***** PRIVATE *****/

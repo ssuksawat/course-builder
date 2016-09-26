@@ -57,6 +57,7 @@
     border: 1px solid $color-grey;
     border-left: 3px solid $color-blue;
     overflow: hidden;
+    cursor: pointer;
     animation: .25s ease CALENDAR_ITEM_IN;
 
     &.has-conflict { border-color: darken(red, 10%); }
