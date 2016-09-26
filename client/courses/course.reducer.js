@@ -30,12 +30,19 @@ export default (state = initialState, action) => {
       const newSelected = Object.assign({}, state.selectedCourses, {
         [action.payload.id]: action.payload,
       });
-      return Object.assign({}, state, { selectedCourses: newSelected });
+      return Object.assign({}, state, { selectedCourses: checkConflict(newSelected) });
     }
     case REMOVE_COURSE: {
-      const newSelected = Object.assign({}, state.selectedCourses);
+      const { selectedCourses, catalog } = state;
+      const newCatalogCourses = catalog.courses.map(course => {
+        return Object.assign({}, course, { hasConflict: undefined });
+      });
+      const newSelected = Object.assign({}, selectedCourses);
       delete newSelected[action.payload];
-      return Object.assign({}, state, { selectedCourses: newSelected });
+      return Object.assign({}, state, {
+        selectedCourses: checkConflict(newSelected),
+        catalog: { courses: newCatalogCourses },
+      });
     }
     case SET_SELECTED_COURSES: {
       const newSelected = {};
@@ -50,3 +57,45 @@ export default (state = initialState, action) => {
     default: return state;
   }
 };
+
+/***** PRIVATE *****/
+
+function checkConflict(selectedCourses) {
+  const conflictMap = {};
+  const results = Object.assign({}, selectedCourses); // clone old object
+  const courses = Object.keys(results).map(id => {
+    delete results[id].hasConflict; // reset all to no conflict
+    return results[id];
+  });
+
+  // build conflict mapping for each day and hour
+  courses.forEach(course => {
+    const start = course.timeIndex[0];
+    const end = course.timeIndex[1];
+    const days = course.dayIndex;
+    days.forEach(day => {
+      for (let i = start; i < end; i++) {
+        conflictMap[day] = conflictMap[day] || {};
+        conflictMap[day][i] = conflictMap[day][i] || [];
+        conflictMap[day][i].push(course.id);
+      }
+    });
+  });
+
+  // check course conflicts for each day
+  courses.forEach(course => {
+    const days = course.dayIndex;
+    const start = course.timeIndex[0];
+    days.forEach(day => {
+      if (!conflictMap[day]) { return; }
+      const conflicts = conflictMap[day][start];
+
+      if (!conflicts || conflicts.length < 2) { return; }
+      conflicts.forEach(id => {
+        results[id].hasConflict = true;
+      });
+    });
+  });
+
+  return results;
+}

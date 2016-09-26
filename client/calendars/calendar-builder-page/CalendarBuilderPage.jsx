@@ -16,6 +16,7 @@ export class CalendarBuilder extends React.Component {
     this.onItemClick = this.onItemClick.bind(this);
     this.isActiveTab = this.isActiveTab.bind(this);
     this.isSelected = this.isSelected.bind(this);
+    this.hasConflict = this.hasConflict.bind(this);
   }
 
   componentWillMount() {
@@ -52,10 +53,15 @@ export class CalendarBuilder extends React.Component {
     return !!this.props.selectedCourses[id];
   }
 
+  hasConflict(id) {
+    const course = this.props.selectedCourses[id];
+    return course && course.hasConflict;
+  }
+
   render() {
     const { catalog, selectedCourses } = this.props;
     const { currentTab } = this.state;
-    const selected = Object.keys(selectedCourses).map(id => catalog.courses[id]);
+    const selected = Object.keys(selectedCourses).map(id => selectedCourses[id]);
     const courses = currentTab === 'ALL' ? catalog.courses : selected;
 
     return (
@@ -77,7 +83,8 @@ export class CalendarBuilder extends React.Component {
               </li>
             </ul>
             <CourseList
-              courses={courses} isSelected={this.isSelected} onItemClick={this.onItemClick}
+              courses={courses} isSelected={this.isSelected} hasConflict={this.hasConflict}
+              onItemClick={this.onItemClick}
             />
           </section>
           <section className="calendar-section">

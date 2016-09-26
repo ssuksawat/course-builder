@@ -9,10 +9,12 @@
   flex-flow: column nowrap;
   border-bottom: 1px solid $color-grey-lighter;
   transition: all .25s ease;
+  cursor: pointer;
 
   &.is-selected { background: $color-blue; }
   &.is-selected .course-list__item-title { color: white; }
   &.is-selected .course-list__item-info { color: $color-grey-lightest; }
+  &.has-conflict { background: lighten(red, 5%); }
 }
 
 .course-list__item-title {

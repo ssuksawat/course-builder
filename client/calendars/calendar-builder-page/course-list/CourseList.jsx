@@ -1,12 +1,15 @@
 import React from 'react';
 import classnames from 'classnames';
 
-const CourseList = ({ courses, isSelected, onItemClick }) => (
+const CourseList = ({ courses, isSelected, hasConflict, onItemClick }) => (
   <div className="course-list">
     {
       courses.map(course => (
         <div
-          className={classnames('course-list__item', { 'is-selected': isSelected(course.id) })}
+          className={classnames('course-list__item', {
+            'is-selected': isSelected(course.id),
+            'has-conflict': hasConflict(course.id),
+          })}
           key={course.id}
           onClick={() => onItemClick(course)}
         >
@@ -26,6 +29,7 @@ const CourseList = ({ courses, isSelected, onItemClick }) => (
 CourseList.propTypes = {
   courses: React.PropTypes.array,
   isSelected: React.PropTypes.func,
+  hasConflict: React.PropTypes.func,
   onItemClick: React.PropTypes.func,
 };
 
