@@ -12,6 +12,12 @@ export class Calendars extends React.Component {
   }
 
   render() {
+    const calendars = this.props.calendars;
+    let emptyMessage;
+    if (!calendars || calendars.length === 0) {
+      emptyMessage = <h5>Click <i>"New Calendar"</i> to add a course calendar</h5>;
+    }
+
     return (
       <div className="page-wrapper calendars">
         <div className="page-header">
@@ -21,7 +27,7 @@ export class Calendars extends React.Component {
         <div className="page-content">
           <ul className="calendar-list">
             {
-              this.props.calendars.map(calendar => (
+              calendars.map(calendar => (
                 <li key={calendar.id}>
                   <Link className="calendar-list__item" to={`/calendars/${calendar.id}`}>
                     <div className="calendar-list__item-title">{calendar.name}</div>
@@ -33,6 +39,7 @@ export class Calendars extends React.Component {
               ))
             }
           </ul>
+          {emptyMessage}
         </div>
       </div>
     );
