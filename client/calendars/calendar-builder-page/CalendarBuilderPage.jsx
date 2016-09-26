@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import * as calendarActions from '../calendar.action';
 import * as courseActions from '../../courses/course.action';
 import CourseList from './course-list/CourseList';
+import Calendar from './calendar/Calendar';
 
 export class CalendarBuilder extends React.Component {
   constructor(props) {
@@ -52,18 +53,10 @@ export class CalendarBuilder extends React.Component {
   }
 
   render() {
-    const { catalog, selectedCourses, courseActions } = this.props;
+    const { catalog, selectedCourses } = this.props;
     const { currentTab } = this.state;
-    const { selectCourse, removeCourse } = courseActions;
-    const selectedCount = Object.keys(selectedCourses).length;
-
-    let courses;
-    if (currentTab === 'ALL') {
-      courses = catalog.courses;
-    } else {
-      courses = Object.keys(selectedCourses).map(id => catalog.courses[id]);
-      console.log('here!', courses);
-    }
+    const selected = Object.keys(selectedCourses).map(id => catalog.courses[id]);
+    const courses = currentTab === 'ALL' ? catalog.courses : selected;
 
     return (
       <div className="page-wrapper calendar-builder">
@@ -80,15 +73,15 @@ export class CalendarBuilder extends React.Component {
                 <a
                   className={classnames('nav-link', { active: this.isActiveTab('SELECTED') })}
                   onClick={() => this.onTabSelect('SELECTED')}
-                >Selected ({selectedCount})</a>
+                >Selected ({selected.length})</a>
               </li>
             </ul>
             <CourseList
               courses={courses} isSelected={this.isSelected} onItemClick={this.onItemClick}
-              />
+            />
           </section>
           <section className="calendar-section">
-            Calendar here
+            <Calendar courses={selected} />
           </section>
         </div>
         <div className="page-footer">
