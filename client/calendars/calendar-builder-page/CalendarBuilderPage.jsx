@@ -12,7 +12,9 @@ export class CalendarBuilder extends React.Component {
     super(props);
     this.state = { currentTab: 'ALL' };
     this.onTabSelect = this.onTabSelect.bind(this);
+    this.onItemClick = this.onItemClick.bind(this);
     this.isActiveTab = this.isActiveTab.bind(this);
+    this.isSelected = this.isSelected.bind(this);
   }
 
   componentWillMount() {
@@ -33,20 +35,34 @@ export class CalendarBuilder extends React.Component {
     });
   }
 
+  onItemClick(course) {
+    if (this.isSelected(course.id)) {
+      this.props.courseActions.removeCourse(course.id);
+    } else {
+      this.props.courseActions.selectCourse(course);
+    }
+  }
+
   isActiveTab(tab) {
     return this.state.currentTab === tab;
   }
 
+  isSelected(id) {
+    return !!this.props.selectedCourses[id];
+  }
+
   render() {
-    const { catalog, selectedCourses } = this.props;
+    const { catalog, selectedCourses, courseActions } = this.props;
     const { currentTab } = this.state;
+    const { selectCourse, removeCourse } = courseActions;
     const selectedCount = Object.keys(selectedCourses).length;
 
     let courses;
     if (currentTab === 'ALL') {
       courses = catalog.courses;
     } else {
-      courses = Object.keys(selectedCourses).map(({ id }) => catalog.courses[id]);
+      courses = Object.keys(selectedCourses).map(id => catalog.courses[id]);
+      console.log('here!', courses);
     }
 
     return (
@@ -67,7 +83,9 @@ export class CalendarBuilder extends React.Component {
                 >Selected ({selectedCount})</a>
               </li>
             </ul>
-            <CourseList courses={courses} />
+            <CourseList
+              courses={courses} isSelected={this.isSelected} onItemClick={this.onItemClick}
+              />
           </section>
           <section className="calendar-section">
             Calendar here

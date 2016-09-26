@@ -8,6 +8,11 @@
   display: flex;
   flex-flow: column nowrap;
   border-bottom: 1px solid $color-grey-lighter;
+  transition: all .25s ease;
+
+  &.is-selected { background: $color-blue; }
+  &.is-selected .course-list__item-title { color: white; }
+  &.is-selected .course-list__item-info { color: $color-grey-lightest; }
 }
 
 .course-list__item-title {
