@@ -1,3 +1,46 @@
 .calendars {
-  padding-top: 24px;
+  padding: 24px 80px;
+  overflow-y: auto;
+
+  .page-header {
+    display: flex;
+    align-items: center;
+  }
+  .page-header h1 {
+    flex: 1;
+  }
+
+  .page-content {
+    padding: 14px;
+  }
+
+  .calendar-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  .calendar-list__item {
+    display: block;
+    margin-bottom: 14px;
+    padding: 12px 24px;
+    width: 100%;
+    border: 1px solid $color-grey-lighter;
+    border-radius: 4px;
+    transition: all .25s ease;
+
+    &:hover {
+      text-decoration: none;
+      box-shadow: 0 4px 12px $color-grey-lighter;
+    }
+  }
+  .calendar-list__item-title {
+    color: $color-grey-darkest;
+    font-size: 1.2rem;
+  }
+  .calendar-list__item-info {
+    color: $color-grey;
+    font-size: 1rem;
+  }
 }

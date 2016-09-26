@@ -48,6 +48,7 @@ export function getCalendarById(id) {
 
 export function saveCalendar(calendar) {
   calendar.id = calendar.id || Math.floor(Math.random() * 1000); // generate random id
+  calendar.updatedAt = Date.now();
   // Note: fake saving calendar - use localStorage instead
   const promise = new Promise((resolve, reject) => {
     try {
