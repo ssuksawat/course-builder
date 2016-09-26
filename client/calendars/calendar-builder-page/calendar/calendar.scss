@@ -30,6 +30,7 @@
   }
 
   .calendar__days {
+    position: relative;
     height: 100%;
     flex: 1;
   }
@@ -44,5 +45,20 @@
       text-align: center;
       border-left: 1px solid $color-grey-lighter;
     }
+  }
+
+  .calendar__item {
+    position: absolute;
+    padding: 8px;
+    background: rgba(255,255,255,.95);
+    color: $color-grey-darkest;
+    border: 1px solid $color-grey;
+    border-left: 3px solid $color-blue;
+  }
+  .calendar__item-title {
+    // @include overflow-ellipsis();
+    white-space: normal;
+    color: $color-blue;
+    font-size: .8rem;
   }
 }

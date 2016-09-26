@@ -1,31 +1,42 @@
 import React from 'react';
 
+import CalendarItem from './CalendarItem';
+
 const timeLabels = getTimeLabels();
 const dayLabels = getDayLabels();
 
-const Calendar = () => {
-  return (
-    <div className="calendar">
-      <ul className="calendar__time-labels">
-        {
-          timeLabels.map((time, i) => <li key={i}>{time}</li>)
-        }
-      </ul>
-      <div className="calendar__days">
-        <ul className="calendar__day-labels">
+export default class Calendar extends React.Component {
+  render() {
+    const courses = this.props.courses;
+    const calendarItems = [];
+    courses.forEach(course => {
+      course.dayIndex.forEach(day => {
+        calendarItems.push(<CalendarItem key={`${course.id}:${day}`} course={course} day={day} />);
+      });
+    });
+
+    return (
+      <div className="calendar">
+        <ul className="calendar__time-labels">
           {
-            dayLabels.map((day, i) => <li key={i}>{day}</li>)
+            timeLabels.map((time, i) => <li key={i}>{time}</li>)
           }
         </ul>
+        <div className="calendar__days" ref={c => { this.calendarEl = c; }}>
+          <ul className="calendar__day-labels">
+            {
+              dayLabels.map((day, i) => <li key={i}>{day}</li>)
+            }
+          </ul>
+          { calendarItems }
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 Calendar.propTypes = {
   courses: React.PropTypes.array,
 };
-
-export default Calendar;
 
 /***** PRIVATE *****/
 
