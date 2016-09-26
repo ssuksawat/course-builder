@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import { setSelectedCourses, clearSelectedCourses } from '../courses/course.action';
 
 export function getCalendars() {
@@ -46,6 +47,7 @@ export function getCalendarById(id) {
 }
 
 export function saveCalendar(calendar) {
+  calendar.id = calendar.id || Math.floor(Math.random() * 1000); // generate random id
   // Note: fake saving calendar - use localStorage instead
   const promise = new Promise((resolve, reject) => {
     try {
@@ -54,7 +56,7 @@ export function saveCalendar(calendar) {
     } catch (e) {
       reject(new Error('Error saving calendar'));
     }
-  });
+  }).then(() => browserHistory.push(`/calendars/${calendar.id}`));
 
   return {
     type: 'SAVE_CALENDAR',

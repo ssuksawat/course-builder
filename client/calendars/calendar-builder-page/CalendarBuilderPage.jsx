@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import * as calendarActions from '../calendar.action';
-import * as courseActions from '../../courses/course.action';
+import * as calendarActionCreators from '../calendar.action';
+import * as courseActionCreators from '../../courses/course.action';
 import CourseList from './course-list/CourseList';
 import Calendar from './calendar/Calendar';
 
@@ -14,6 +14,7 @@ export class CalendarBuilder extends React.Component {
     this.state = { currentTab: 'ALL' };
     this.onTabSelect = this.onTabSelect.bind(this);
     this.onItemClick = this.onItemClick.bind(this);
+    this.onSaveClick = this.onSaveClick.bind(this);
     this.isActiveTab = this.isActiveTab.bind(this);
     this.isSelected = this.isSelected.bind(this);
     this.hasConflict = this.hasConflict.bind(this);
@@ -45,6 +46,13 @@ export class CalendarBuilder extends React.Component {
     }
   }
 
+  onSaveClick() {
+    const { calendar, selectedCourses, calendarActions } = this.props;
+    calendar.name = this.nameInput.value || 'New Calendar';
+    calendar.courses = Object.keys(selectedCourses).map(id => selectedCourses[id]);
+    calendarActions.saveCalendar(calendar);
+  }
+
   isActiveTab(tab) {
     return this.state.currentTab === tab;
   }
@@ -63,6 +71,10 @@ export class CalendarBuilder extends React.Component {
     const { currentTab } = this.state;
     const selected = Object.keys(selectedCourses).map(id => selectedCourses[id]);
     const courses = currentTab === 'ALL' ? catalog.courses : selected;
+
+    if (this.nameInput && calendar) {
+      this.nameInput.value = calendar.name;
+    }
 
     return (
       <div className="page-wrapper calendar-builder">
@@ -92,11 +104,14 @@ export class CalendarBuilder extends React.Component {
           </section>
         </div>
         <div className="page-footer">
+          <label className="hidden-xs-down" htmlFor="calendarName">Name: </label>
           <input
-            className="form-control name-input" placeholder="Calendar Name..." value={calendar.name}
-            ref={c => { this.nameInput = c; }}
+            className="form-control name-input" placeholder="Calendar Name..."
+            ref={c => { this.nameInput = c; }} id="calendarName"
           />
-          <button className="btn btn-primary save-btn">Save</button>
+          <button
+            className="btn btn-primary save-btn" onClick={() => this.onSaveClick()}
+          >Save</button>
         </div>
       </div>
     );
@@ -120,8 +135,8 @@ const mapStateToProps = ({ courses, calendars }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  calendarActions: bindActionCreators(calendarActions, dispatch),
-  courseActions: bindActionCreators(courseActions, dispatch),
+  calendarActions: bindActionCreators(calendarActionCreators, dispatch),
+  courseActions: bindActionCreators(courseActionCreators, dispatch),
 });
 
 const CalendarBuilderPage = connect(mapStateToProps, mapDispatchToProps)(CalendarBuilder);

@@ -29,8 +29,13 @@
     padding: 12px 24px;
     height: 68px;
     display: flex;
+    align-items: center;
     border-top: 1px solid $color-grey-lighter;
 
+    label {
+      font-weight: bold;
+      margin-right: 14px;
+    }
     .name-input {
       padding-right: 24px;
       max-width: 500px;

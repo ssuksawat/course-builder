@@ -2,6 +2,7 @@ const initialState = {
   calendars: [],
   calendar: { name: '', courses: [] },
   loading: false,
+  saving: false,
   error: undefined,
 };
 
@@ -26,11 +27,15 @@ export default (state = initialState, action) => {
 
     case GET_ALL_CALENDARS_PENDING:
     case GET_CALENDAR_PENDING:
-    case SAVE_CALENDAR_PENDING:
     case DELETE_CALENDAR_PENDING:
       return Object.assign({}, state, {
         loading: true,
         error: undefined,
+      });
+    case SAVE_CALENDAR_PENDING:
+      return Object.assign({}, state, {
+        error: undefined,
+        saving: true,
       });
 
     case GET_ALL_CALENDARS_SUCCESS:
@@ -45,10 +50,14 @@ export default (state = initialState, action) => {
         loading: false,
         error: undefined,
       });
-    case SAVE_CALENDAR_SUCCESS:
     case DELETE_CALENDAR_SUCCESS:
       return Object.assign({}, state, {
         loading: false,
+        error: undefined,
+      });
+    case SAVE_CALENDAR_SUCCESS:
+      return Object.assign({}, state, {
+        saving: false,
         error: undefined,
       });
 
@@ -64,7 +73,7 @@ export default (state = initialState, action) => {
       });
     case SAVE_CALENDAR_FAILED:
       return Object.assign({}, state, {
-        loading: false,
+        saving: false,
         error: action.payload.message || 'Failed to save calendar',
       });
     case DELETE_CALENDAR_FAILED:
