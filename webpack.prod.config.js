@@ -3,8 +3,6 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  debug: true,
-  devtool: 'inline-source-map',
   context: path.join(__dirname, './client'),
   entry: [
     './index.jsx',
@@ -41,7 +39,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap'],
+        loaders: ['style', 'css', 'postcss', 'sass'],
       },
       {
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
